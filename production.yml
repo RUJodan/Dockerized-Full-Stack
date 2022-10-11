@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  api:
+    restart: always
+    build:
+      dockerfile: Dockerfile.prod
+
+  client:
+    restart: always
+    build:
+      dockerfile: Dockerfile.prod
