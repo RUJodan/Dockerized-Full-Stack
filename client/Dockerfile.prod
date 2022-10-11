@@ -9,4 +9,4 @@ CMD ["npm", "run", "build"]
 
 FROM nginx:stable AS server
 
-COPY --from build /app/out /usr/share/nginx/html
+COPY --from build /app/public /usr/share/nginx/html
