@@ -11,7 +11,7 @@
 
 # production builds
 /client/build
-# /server/dist
+/server/dist
 /build
 
 # misc
