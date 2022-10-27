@@ -6,9 +6,8 @@ const router = express.Router();
 
 export async function login (req: express.Request, res: express.Response) {
   let identity: Record<string, any> | undefined;
+  const db = await pool.connect();
   try {
-    const db = pool;
-    db.connect();
     identity = await verify(req.body.token);
     // query for existing user
     const { rowCount, rows } = await db.query(
@@ -29,6 +28,8 @@ export async function login (req: express.Request, res: express.Response) {
     res.json({ authenticated: true, user: rows });
   } catch (error) {
     res.json({ authenticated: false, error: error });
+  } finally {
+    db.release();
   }
 }
 

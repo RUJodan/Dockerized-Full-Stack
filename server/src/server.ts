@@ -1,10 +1,6 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import { OAuth2Client } from 'google-auth-library';
-
-// local imports
-import { pool } from './db';
 
 // routing imports
 import { login } from './routes/login';
