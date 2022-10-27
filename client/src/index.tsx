@@ -1,17 +1,30 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import { createRoot } from 'react-dom/client';
+import { AuthProvider } from 'react-oidc-context';
 
-const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
+import { App } from './app';
+import './styles/styles.css';
+
+const oidcConfig = {
+  authority: 'https://accounts.google.com',
+  token_endpoint: 'https://oauth2.googleapis.com/token',
+  client_id: process.env.REACT_APP_GOOGLE_OAUTH_CLIENT_ID as string,
+  client_secret: process.env.REACT_APP_GOOGLE_OAUTH_CLIENT_SECRET as string,
+  redirect_uri: process.env.REACT_APP_GOOGLE_OAUTH_REDIRECT as string,
+  response_type: 'code',
+  prompt: 'consent',
+  scope: ['openid', 'email'].join(' '),
+};
+
+const container = document.getElementById('app');
+if (!container) throw new Error('Failed to find the root container');
+
+const root = createRoot(container);
+
 root.render(
   <React.StrictMode>
-    <App />
+    <AuthProvider {...oidcConfig}>
+      <App />
+    </AuthProvider>
   </React.StrictMode>,
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();

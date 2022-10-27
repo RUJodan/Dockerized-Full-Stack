@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+  nginx:
+    depends_on:
+      - api
+      - client
+    restart: always
+    build:
+      dockerfile: Dockerfile
+      context: ./nginx
+    ports:
+      - "3050:80"
+
+  api:
+    build:
+      dockerfile: Dockerfile.dev
+      context: "./server"
+    volumes:
+      - /app/node_modules
+      - ./server:/app
+    environment:
+      # add database credentials
+      - DB_USER=[db user]
+      - DB_HOST=[db host]
+      - DB_NAME=[db name]
+      - DB_PASSWORD=[db password]
+      - DB_PORT=[db port most likely 5432]
+      # add oauth environment var
+      - GOOGLE_OAUTH_CLIENT_ID=[your client id]
+      - GOOGLE_OAUTH_CLIENT_SECRET=[your client secret]
+      - GOOGLE_OAUTH_REDIRECT_URL=http://localhost:3050/auth/callback
+
+  client:
+    stdin_open: true
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+      - WDS_SOCKET_PORT=0
+      - REACT_APP_GOOGLE_OAUTH_CLIENT_ID=[your client id]
+      - REACT_APP_GOOGLE_OAUTH_CLIENT_SECRET=[your client secret]
+      - REACT_APP_GOOGLE_OAUTH_ENDPOINT=http://localhost:3050
+      - REACT_APP_GOOGLE_OAUTH_REDIRECT=http://localhost:3050/auth/callback
+      - REACT_APP_API_SERVER_URL=http://localhost:3050
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./client
+    volumes:
+      - /app/node_modules
+      - ./client:/app

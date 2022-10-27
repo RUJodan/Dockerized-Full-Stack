@@ -1,0 +1,114 @@
+@import url("https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600&display=swap");
+
+/* Theme */
+
+:root {
+  --background: hsl(218, 80%, 2%);
+  --nav-background: hsl(216, 28%, 7%);
+
+  --color-primary: hsl(210, 17%, 82%);
+  --color-secondary: hsl(212, 9%, 58%);
+
+  --content-background: var(--dark-aluminium);
+  --content-background-light: var(--light-aluminium);
+
+  --font-primary: "Inter", sans-serif;
+  --font-secondary: "Space Grotesk", sans-serif;
+  --font-mono: "Fira Code", monospace;
+
+  /* colors */
+  --white: hsl(0, 0%, 100%);
+  --black: hsl(0, 0%, 0%);
+  --black-010: hsl(0, 0%, 18%);
+  --black-025: hsl(0, 0%, 22.5%);
+  --black-050: hsl(0, 0%, 24%);
+  --black-075: hsl(210, 4%, 26%);
+  --black-100: hsl(210, 4.5%, 30.5%);
+  --black-150: hsl(210, 5%, 35%);
+  --black-200: hsl(210, 5.5%, 43.5%);
+  --black-300: hsl(210, 6.5%, 52%);
+  --black-350: hsl(210, 7%, 61%);
+  --black-400: hsl(210, 8%, 65%);
+  --black-500: hsl(210, 8%, 70%);
+  --black-600: hsl(210, 7%, 78.5%);
+  --black-700: hsl(210, 8%, 82.5%);
+  --black-750: hsl(210, 9%, 86.5%);
+  --black-800: hsl(210, 9%, 91.5%);
+  --black-900: hsl(210, 4%, 95%);
+  --orange-050: hsl(27, 16.5%, 23.9%);
+  --orange-100: hsl(27, 30%, 28.4%);
+  --orange-200: hsl(27, 50%, 36.9%);
+  --orange-300: hsl(27, 70%, 47.3%);
+  --orange-400: hsl(27, 90.5%, 54.9%);
+  --orange-500: hsl(27, 100%, 59%);
+  --orange-600: hsl(27, 100%, 68.4%);
+  --orange-700: hsl(27, 89.5%, 74.1%);
+  --orange-800: hsl(27, 92%, 85.7%);
+  --orange-900: hsl(27, 95%, 91.8%);
+  --blue-050: hsl(206, 40%, 23%);
+  --blue-100: hsl(206, 44%, 26%);
+  --blue-200: hsl(206, 46%, 30%);
+  --blue-300: hsl(206, 53%, 35%);
+  --blue-400: hsl(209, 56%, 43%);
+  --blue-500: hsl(206, 64%, 51%);
+  --blue-600: hsl(206, 100%, 60%);
+  --blue-700: hsl(206, 90%, 74%);
+  --blue-800: hsl(206, 95%, 86%);
+  --blue-900: hsl(206, 91%, 91.5%);
+  --powder-000: hsl(218, 12%, 19%);
+  --powder-050: hsl(205, 5%, 27%);
+  --powder-100: hsl(205, 14%, 28%);
+  --powder-200: hsl(205, 17.5%, 32%);
+  --powder-300: hsl(205, 19.5%, 37%);
+  --powder-400: hsl(205, 22.5%, 44%);
+  --powder-500: hsl(205, 29%, 54%);
+  --powder-600: hsl(205, 50%, 65.5%);
+  --powder-700: hsl(205, 46.5%, 73.5%);
+  --powder-750: hsl(217, 16%, 78%);
+  --powder-800: hsl(205, 49.5%, 87%);
+  --powder-900: hsl(205, 100%, 95%);
+  --green-025: hsl(140, 18%, 22%);
+  --green-050: hsl(140, 18%, 25%);
+  --green-100: hsl(140, 22.5%, 31%);
+  --green-200: hsl(140, 23.5%, 37%);
+  --green-300: hsl(140, 25%, 40.5%);
+  --green-400: hsl(140, 27.5%, 48.5%);
+  --green-500: hsl(140, 35%, 54.5%);
+  --green-600: hsl(140, 40%, 61.5%);
+  --green-700: hsl(140, 39.5%, 69.5%);
+  --green-800: hsl(140, 39.5%, 78.5%);
+  --green-900: hsl(140, 38%, 86.5%);
+  --yellow-050: hsl(47, 13%, 24.5%);
+  --yellow-100: hsl(47, 19%, 27%);
+  --yellow-200: hsl(47, 30.5%, 31%);
+  --yellow-300: hsl(47, 37%, 36%);
+  --yellow-400: hsl(47, 45.5%, 42.5%);
+  --yellow-500: hsl(47, 55.5%, 48%);
+  --yellow-600: hsl(47, 67.5%, 55.5%);
+  --yellow-700: hsl(47, 84.5%, 64%);
+  --yellow-800: hsl(47, 90%, 72.5%);
+  --yellow-900: hsl(47, 93%, 83.5%);
+  --red-025: hsl(1, 10%, 24%);
+  --red-050: hsl(1, 30%, 26.5%);
+  --red-100: hsl(1, 35%, 33%);
+  --red-200: hsl(1, 37%, 38.5%);
+  --red-300: hsl(1, 39%, 43.5%);
+  --red-400: hsl(1, 42%, 49%);
+  --red-500: hsl(1, 50%, 54%);
+  --red-600: hsl(1, 56.5%, 59.5%);
+  --red-700: hsl(1, 62.5%, 65.5%);
+  --red-800: hsl(1, 64%, 74%);
+  --red-900: hsl(1, 65.5%, 85.5%);
+  --gold: hsl(48, 100%, 50%);
+  --gold-lighter: hsl(48, 22%, 30%);
+  --gold-darker: hsl(45, 100%, 47%);
+  --silver: hsl(210, 6%, 72%);
+  --silver-lighter: hsl(0, 0%, 26%);
+  --silver-darker: hsl(210, 3%, 61%);
+  --bronze: hsl(28, 38%, 67%);
+  --bronze-lighter: hsl(28, 13%, 27%);
+  --bronze-darker: hsl(28, 31%, 52%);
+  --light-aluminium: hsl(210, 11%, 93%);
+  --aluminium: hsl(217, 16%, 78%);
+  --dark-aluminium: hsl(218, 12%, 19%);
+}

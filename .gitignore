@@ -9,7 +9,9 @@
 # testing
 /coverage
 
-# production
+# production builds
+/client/build
+/server/dist
 /build
 
 # misc
@@ -24,3 +26,7 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 node_modules
+
+# ignore production/dev docker-compose files to secure client secret keys/db credentials
+docker-compose.yml
+docker-compose.prod.yml
