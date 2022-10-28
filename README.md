@@ -1,7 +1,9 @@
 # Dockerizing a Full Stack Skeleton Application
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-This project was also bootstrapped with [Auth0 Typescript](https://github.com/auth0-developer-hub/spa_react_javascript_hello-world_react-router-6/tree/basic-authentication-with-api-integration) and modified with inspiration.
+This project was also bootstrapped with [Auth0 Typescript](https://github.com/auth0-developer-hub/spa_react_javascript_hello-world_react-router-6/tree/basic-authentication-with-api-integration) and modified with inspiration from their UI layout.
+
+This project includes: Full docker containers (database is abstracted so you can use what you want via standard images), Typescript, Oauth2, EsLint, Prettier, basic account login and creation (via postgres), and modern solutions like CSS vars/theme, React Router V6, and more!
 
 ## Available Scripts
 
