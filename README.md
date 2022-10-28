@@ -27,3 +27,11 @@ Open [http://localhost:3050](http://localhost:3050) to view it in the browser.
 You will have to inject production environment variables into the `production.yml` file as desired.
 
 Local development without docker is also available by using the scripts in `package.json` (build, dev, etc)
+
+## PG & PGAdmin Commands
+PGADmin
+`docker run --name pgadmin -p 5050:80 -e PGADMIN_DEFAULT_EMAIL=youremail -e PGADMIN_DEFAULT_PASSWORD=yourpassword -d dpage/pgadmin4`
+
+Configure Server on PGAdmin by using `docker inspect [container id]` and use the Gateway IP Address in your connection
+
+`docker run --name postgresql -e POSTGRES_USER=myusername -e POSTGRES_PASSWORD=mypassword -p 5432:5432 -v /data:/var/lib/postgresql/data -d postgres` to pull the postgress container from docker
