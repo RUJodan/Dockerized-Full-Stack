@@ -16,7 +16,7 @@ async function callApi(config: AxiosRequestConfig) {
 
 export const getPublicResource = async (): Promise<ApiResponse> => {
   const config: AxiosRequestConfig = {
-    url: `${apiServerUrl}/test`,
+    url: `${apiServerUrl}/public`,
     method: 'GET',
     headers: {
       'content-type': 'application/json',
@@ -26,22 +26,11 @@ export const getPublicResource = async (): Promise<ApiResponse> => {
   return callApi(config);
 };
 
-export const getProtectedResource = async (accessToken: string): Promise<ApiResponse> => {
+export const getProtectedResource = async (
+  accessToken: string | undefined,
+): Promise<ApiResponse> => {
   const config: AxiosRequestConfig = {
-    url: `${apiServerUrl}/test`,
-    method: 'GET',
-    headers: {
-      'content-type': 'application/json',
-      Authorization: `Bearer ${accessToken}`,
-    },
-  };
-
-  return callApi(config);
-};
-
-export const getAdminResource = async (accessToken: string): Promise<ApiResponse> => {
-  const config: AxiosRequestConfig = {
-    url: `${apiServerUrl}/test`,
+    url: `${apiServerUrl}/protected`,
     method: 'GET',
     headers: {
       'content-type': 'application/json',

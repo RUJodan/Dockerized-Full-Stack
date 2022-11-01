@@ -4,6 +4,8 @@ import { useAuth } from 'react-oidc-context';
 
 import { LoginButton } from '../../buttons/login-button';
 import { LogoutButton } from '../../buttons/logout-button';
+import { SignupButton } from '../../buttons/signup-button';
+import { NavbarButton } from '../../buttons/navbar-button';
 
 export const NavBar: React.FC = () => {
   const auth = useAuth();
@@ -14,23 +16,36 @@ export const NavBar: React.FC = () => {
           <NavLink to='/'>App Name Here</NavLink>
         </div>
         <div className='nav-bar__tabs'>
-          <NavLink
-            to='/profile'
-            end
-            className={({ isActive }) => 'nav-bar__tab ' + (isActive ? 'nav-bar__tab--active' : '')}
-          >
-            Profile
-          </NavLink>
-          <NavLink
-            to='/public'
-            end
-            className={({ isActive }) => 'nav-bar__tab ' + (isActive ? 'nav-bar__tab--active' : '')}
-          >
-            Public
-          </NavLink>
+          <div className='nav-bar__tab'>
+            <NavLink
+              to='/profile'
+              end
+              className={({ isActive }) =>
+                'nav-bar__tab ' + (isActive ? 'nav-bar__tab--active' : '')
+              }
+            >
+              Profile
+            </NavLink>
+          </div>
+          <div className='nav-bar__tab'>
+            <NavLink
+              to='/public'
+              end
+              className={({ isActive }) =>
+                'nav-bar__tab ' + (isActive ? 'nav-bar__tab--active' : '')
+              }
+            >
+              Public
+            </NavLink>
+          </div>
         </div>
         <div className='nav-bar__buttons'>
-          {!auth.isAuthenticated && <LoginButton />}
+          {!auth.isAuthenticated && (
+            <>
+              <SignupButton />
+              <LoginButton />
+            </>
+          )}
           {auth.isAuthenticated && <LogoutButton />}
         </div>
         <div className='nav-bar__hamburger'>
@@ -39,36 +54,19 @@ export const NavBar: React.FC = () => {
             <div className='menu-button'></div>
           </label>
           <ul className='menu'>
-            <li>
-              <NavLink
-                to='/profile'
-                end
-                className={({ isActive }) =>
-                  'nav-bar__tab ' + (isActive ? 'nav-bar__tab--active' : '')
-                }
-              >
-                Profile
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to='/public'
-                end
-                className={({ isActive }) =>
-                  'nav-bar__tab ' + (isActive ? 'nav-bar__tab--active' : '')
-                }
-              >
-                Public
-              </NavLink>
-            </li>
             {!auth.isAuthenticated && (
-              <li>
-                <LoginButton />
-              </li>
+              <>
+                <li>
+                  <NavbarButton secondary text='Sign Up' authAction={auth.signinRedirect} />
+                </li>
+                <li>
+                  <NavbarButton text='Login' authAction={auth.signinRedirect} />
+                </li>
+              </>
             )}
             {auth.isAuthenticated && (
               <li>
-                <LogoutButton />
+                <NavbarButton danger text='Log Out' authAction={auth.signoutRedirect} />
               </li>
             )}
           </ul>

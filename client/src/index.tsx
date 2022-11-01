@@ -11,6 +11,7 @@ const oidcConfig = {
   client_id: process.env.REACT_APP_GOOGLE_OAUTH_CLIENT_ID as string,
   client_secret: process.env.REACT_APP_GOOGLE_OAUTH_CLIENT_SECRET as string,
   redirect_uri: process.env.REACT_APP_GOOGLE_OAUTH_REDIRECT as string,
+  post_logout_redirect_uri: process.env.REACT_APP_GOOGLE_OAUTH_REDIRECT as string,
   response_type: 'code',
   prompt: 'consent',
   scope: ['openid', 'email'].join(' '),

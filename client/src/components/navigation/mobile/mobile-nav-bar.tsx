@@ -2,13 +2,7 @@ import React from 'react';
 import cx from 'classnames';
 import { NavLink, useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faUser,
-  faHome,
-  faLock,
-  faChartLine,
-  IconDefinition,
-} from '@fortawesome/free-solid-svg-icons';
+import { faUser, faHome, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 
 export const MobileNavBar: React.FC = () => {
   const location = useLocation();
@@ -24,18 +18,6 @@ export const MobileNavBar: React.FC = () => {
       route: '/public',
       label: 'Public',
       icon: faHome,
-    },
-    {
-      id: 2,
-      route: '/protected',
-      label: 'Protected',
-      icon: faLock,
-    },
-    {
-      id: 3,
-      route: '/admin',
-      label: 'Admin',
-      icon: faChartLine,
     },
   ];
 

@@ -180,6 +180,7 @@
   .nav-bar {
     padding: 14px;
   }
+
   .nav-bar__tabs, .nav-bar__buttons {
     display: none;
   }
@@ -238,7 +239,7 @@
 
   #menu-toggle:checked~.menu li {
     border: 1px solid #333;
-    height: 2.5em;
+    height: 4.5em;
     transition: height 400ms cubic-bezier(0.23, 1, 0.32, 1);
   }
 

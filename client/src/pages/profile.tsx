@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useAuth } from 'react-oidc-context';
 import { CodeSnippet } from '../components/code-snippet';
 import { PageLayout } from '../components/page-layout';
-import { getPublicResource } from '../services/api';
+import { getProtectedResource } from '../services/api';
 
 export const Profile: React.FC = () => {
   const auth = useAuth();
@@ -11,8 +11,8 @@ export const Profile: React.FC = () => {
   useEffect(() => {
     let isMounted = true;
 
-    const getMessage = async () => {
-      const { data, error } = await getPublicResource();
+    const getMessage = async (token: string | undefined) => {
+      const { data, error } = await getProtectedResource(token);
 
       if (!isMounted) {
         return;
@@ -27,12 +27,17 @@ export const Profile: React.FC = () => {
       }
     };
 
-    getMessage();
+    if (auth.user?.id_token) {
+      getMessage(auth.user?.id_token);
+    } else {
+      setMessage('Access Token not found, please sign in');
+    }
 
     return () => {
       isMounted = false;
     };
-  }, []);
+  }, [auth.user]);
+
   return (
     <PageLayout>
       <div className='content-layout'>
@@ -50,7 +55,9 @@ export const Profile: React.FC = () => {
             </span>
           </p>
           <div className='profile-grid'>
-            <div className='profile__header'>Hello {auth.user?.profile.sub}</div>
+            {auth.isAuthenticated && (
+              <div className='profile__header'>Hello {auth.user?.profile.sub}</div>
+            )}
             <div className='profile__details'>
               <CodeSnippet title='Decoded ID Token' code={message} />
             </div>

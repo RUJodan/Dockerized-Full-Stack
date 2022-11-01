@@ -21,13 +21,7 @@
 
 @media only screen and (max-width: 1024px) {
   .page-layout__content {
-    margin-top: 6rem;
     margin-top: 4rem;
-  }
-}
-
-@media only screen and (max-width: 640px) {
-  .page-layout__content {
-    margin-bottom: 4rem;
+    margin-bottom: 40px;
   }
 }
