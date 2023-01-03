@@ -34,4 +34,4 @@ PGADmin
 
 Configure Server on PGAdmin by using `docker inspect [container id]` and use the Gateway IP Address in your connection
 
-`docker run --name postgresql -e POSTGRES_USER=myusername -e POSTGRES_PASSWORD=mypassword -p 5432:5432 -v /data:/var/lib/postgresql/data -d postgres` to pull the postgress container from docker
+`docker run --name postgresql -e POSTGRES_USER=myusername -e POSTGRES_PASSWORD=mypassword -p 5432:5432 -v data:/var/lib/postgresql/data -d postgres` to pull the postgress container from docker
