@@ -1,0 +1,10 @@
+-- Role: roleplayr
+-- DROP ROLE IF EXISTS roleplayr;
+
+CREATE ROLE roleplayr WITH
+  LOGIN
+  SUPERUSER
+  INHERIT
+  CREATEDB
+  CREATEROLE
+  REPLICATION;

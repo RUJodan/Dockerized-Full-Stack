@@ -15,6 +15,7 @@ export async function verify(token: string) {
       userId: ticket.getUserId(),
     };
   } catch (error) {
-    return error;
+    console.log(error)
+    throw new Error(error);
   }
 }

@@ -9,6 +9,7 @@ export function Callback() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    console.log(auth);
     if (!auth.isLoading && auth.user?.id_token) {
       // verify token with API
       verifyGoogleToken(auth.user.id_token)
@@ -29,7 +30,7 @@ export function Callback() {
   return (
     <PageLayout>
       <div className='content-layout'>
-        <h1 id='page-title' className='content__title'>
+        <h1 id='page-title' className='content-title'>
           <div>Signing in...</div>
         </h1>
       </div>

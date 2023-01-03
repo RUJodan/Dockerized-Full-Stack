@@ -9,12 +9,18 @@ export const MobileNavBar: React.FC = () => {
   const navItems: Record<string, string | number | IconDefinition>[] = [
     {
       id: 0,
+      route: '/',
+      label: 'Home',
+      icon: faHome,
+    },
+    {
+      id: 1,
       route: '/profile',
       label: 'Profile',
       icon: faUser,
     },
     {
-      id: 1,
+      id: 2,
       route: '/public',
       label: 'Public',
       icon: faHome,

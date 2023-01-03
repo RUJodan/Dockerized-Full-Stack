@@ -19,15 +19,21 @@
     "oidc-client-ts": "^2.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-hook-form": "^7.39.3",
+    "react-loader-spinner": "^5.3.4",
+    "react-modal": "^3.16.1",
     "react-oidc-context": "^2.2.0",
     "react-responsive": "^9.0.0",
     "react-router-dom": "^6.4.2",
     "react-scripts": "5.0.1",
+    "react-select": "^5.6.1",
+    "react-toastify": "^9.1.1",
     "typescript": "^4.8.4",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
     "start": "WATCHPACK_POLLING=true react-scripts start",
+    "start:dev": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -53,6 +59,7 @@
   "devDependencies": {
     "@types/classnames": "^2.3.1",
     "@types/react-dom": "^18.0.6",
+    "@types/react-modal": "^3.13.1",
     "@types/react-router-dom": "^5.3.3",
     "@typescript-eslint/eslint-plugin": "^5.39.0",
     "@typescript-eslint/parser": "^5.39.0",

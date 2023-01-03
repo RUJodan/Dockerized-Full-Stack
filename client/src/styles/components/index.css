@@ -1,7 +1,11 @@
+/* components */
 @import "button.css";
-@import "code-snippet.css";
-@import "page-loader.css";
-@import "nav-bar.css";
+@import "card.css";
+@import "checkbox.css";
+@import "text-input.css";
 @import "mobile-bottom-bar.css";
-@import "grids/index.css";
+@import "nav-bar.css";
+@import "radio.css";
+
+/* layouts */
 @import "layouts/index.css";

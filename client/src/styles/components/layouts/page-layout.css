@@ -7,21 +7,20 @@
   width: 100%;
 }
 
-.page-layout__content {
+.page-layout-content {
   flex: 1;
   flex-basis: auto;
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
 
-  margin-top: 4rem;
+  margin-top: 57px;
   max-width: 120rem;
   width: 100%;
 }
 
 @media only screen and (max-width: 1024px) {
-  .page-layout__content {
-    margin-top: 4rem;
-    margin-bottom: 40px;
+  .page-layout-content {
+    margin-bottom: 50px;
   }
 }

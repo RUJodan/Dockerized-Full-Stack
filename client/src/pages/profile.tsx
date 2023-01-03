@@ -1,68 +1,127 @@
 import React, { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 import { useAuth } from 'react-oidc-context';
-import { CodeSnippet } from '../components/code-snippet';
+import { Navigate, useNavigate } from 'react-router-dom';
+import { InfinitySpin } from 'react-loader-spinner';
 import { PageLayout } from '../components/page-layout';
-import { getProtectedResource } from '../services/api';
+import { getUser } from '../services/api';
+import { User } from '../models/user';
+import { Button } from '../components/button';
+import { Card } from '../components/card';
+import { faHeart } from '@fortawesome/free-solid-svg-icons';
 
 export const Profile: React.FC = () => {
   const auth = useAuth();
-  const [message, setMessage] = useState<string>('');
+  const navigate = useNavigate();
+  const [user, setUser] = useState<User | undefined>(undefined);
+  const [userActivated, setUserActivated] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     let isMounted = true;
-
-    const getMessage = async (token: string | undefined) => {
-      const { data, error } = await getProtectedResource(token);
+    const getUserFromApi = async (userId: string | undefined, token: string | undefined) => {
+      const { data, error } = await getUser(userId, token);
 
       if (!isMounted) {
         return;
       }
 
       if (data) {
-        setMessage(JSON.stringify(data, null, 2));
+        setUser(data as User);
+        setUserActivated(data.activated);
       }
 
       if (error) {
-        setMessage(JSON.stringify(error, null, 2));
+        console.log(error);
+        toast(`${error.message}`);
+        navigate('/');
       }
     };
 
-    if (auth.user?.id_token) {
-      getMessage(auth.user?.id_token);
-    } else {
-      setMessage('Access Token not found, please sign in');
+    if (auth.user?.id_token && auth?.user?.profile.sub) {
+      getUserFromApi(auth?.user?.profile.sub, auth.user?.id_token);
     }
+
+    setLoading(false);
 
     return () => {
       isMounted = false;
     };
   }, [auth.user]);
 
+  if (!auth.isAuthenticated) {
+    return <Navigate to='/' />;
+  }
+
   return (
     <PageLayout>
       <div className='content-layout'>
-        <h1 id='page-title' className='content__title'>
-          Profile Page
-        </h1>
-        <div className='content__body'>
-          <p id='page-description'>
-            <span>
-              You can use the <strong>ID Token</strong> to get the profile information of an
-              authenticated user.
-            </span>
-            <span>
-              <strong>Only authenticated users can access this page.</strong>
-            </span>
-          </p>
-          <div className='profile-grid'>
-            {auth.isAuthenticated && (
-              <div className='profile__header'>Hello {auth.user?.profile.sub}</div>
-            )}
-            <div className='profile__details'>
-              <CodeSnippet title='Decoded ID Token' code={message} />
-            </div>
+        {loading && (
+          <div className='content-loading'>
+            <InfinitySpin width='200' color='#fff' />
           </div>
-        </div>
+        )}
+        {!loading && (
+          <Card title='Small Buttons'>
+            <div>
+              <Button
+                size='sm'
+                variant='primary'
+                onClick={() => console.log('click')}
+                text='Button'
+                icon={faHeart}
+                iconPlacement='start'
+              />
+              <Button
+                disabled
+                size='sm'
+                variant='primary'
+                onClick={() => console.log('click')}
+                text='Button'
+                icon={faHeart}
+                iconPlacement='end'
+              />
+            </div>
+            <div>
+              <Button
+                size='sm'
+                variant='secondary'
+                onClick={() => console.log('click')}
+                text='Button'
+                icon={faHeart}
+                iconPlacement='start'
+              />
+              <Button
+                disabled
+                size='sm'
+                variant='secondary'
+                onClick={() => console.log('click')}
+                text='Button'
+                icon={faHeart}
+                iconPlacement='end'
+              />
+            </div>
+            <div>
+              <Button
+                size='sm'
+                variant='tertiary'
+                onClick={() => console.log('click')}
+                text='Button'
+                icon={faHeart}
+                iconPlacement='start'
+              />
+              <Button
+                disabled
+                size='sm'
+                variant='tertiary'
+                onClick={() => console.log('click')}
+                text='Button'
+                icon={faHeart}
+                iconPlacement='end'
+              />
+            </div>
+          </Card>
+        )}
       </div>
     </PageLayout>
   );

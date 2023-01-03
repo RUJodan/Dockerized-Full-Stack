@@ -1,23 +1,22 @@
 import express from 'express';
-import { pool } from "../db";
+import { client } from "../db";
 import { verify } from "../utils/verify";
 
 const router = express.Router();
 
 export async function login (req: express.Request, res: express.Response) {
   let identity: Record<string, any> | undefined;
-  const db = await pool.connect();
   try {
     identity = await verify(req.body.token);
     // query for existing user
-    const { rowCount, rows } = await db.query(
+    const { rowCount, rows } = await client.query(
       `SELECT sub FROM "users" WHERE sub=$1`,
       [identity.userId]
     );
 
     if (!rowCount) {
       // insert user
-      pool.query(
+      client.query(
         `INSERT INTO "users" ("sub", "email") VALUES ($1, $2)`,
         [identity.userId, identity.payload.email]
       );
@@ -28,8 +27,6 @@ export async function login (req: express.Request, res: express.Response) {
     res.json({ authenticated: true, user: rows });
   } catch (error) {
     res.json({ authenticated: false, error: error });
-  } finally {
-    db.release();
   }
 }
 

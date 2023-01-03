@@ -1,6 +1,5 @@
-import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
+import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { ApiResponse } from '../models/api-response';
-import { AppError } from '../models/app-error';
 
 export const callExternalApi = async (options: {
   config: AxiosRequestConfig;
@@ -15,28 +14,24 @@ export const callExternalApi = async (options: {
     };
   } catch (error) {
     if (axios.isAxiosError(error)) {
-      const axiosError = error as AxiosError;
+      const { response } = error;
 
-      const { response } = axiosError;
+      let message = 'HTTP Request Failed';
+      let status = null;
 
-      let message = 'http request failed';
-
-      if (response && response.statusText) {
-        message = response.statusText;
+      if (response && response.status) {
+        status = response.status;
       }
 
-      if (axiosError.message) {
-        message = axiosError.message;
-      }
-
-      if (response && response.data && (response.data as AppError).message) {
-        message = (response.data as AppError).message;
+      if (response && response.data && response.data.error) {
+        message = response.data.error;
       }
 
       return {
         data: null,
         error: {
           message,
+          status,
         },
       };
     }
@@ -44,7 +39,8 @@ export const callExternalApi = async (options: {
     return {
       data: null,
       error: {
-        message: (error as Error).message,
+        message: 'An unknown HTTP error has occurred.',
+        status: null,
       },
     };
   }

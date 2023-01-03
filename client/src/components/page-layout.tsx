@@ -1,6 +1,6 @@
 import React from 'react';
-import { NavBar } from './navigation/desktop/nav-bar';
-import { MobileNavBar } from './navigation/mobile/mobile-nav-bar';
+import { NavBar } from './nav-bar';
+import { MobileNavBar } from './mobile-nav-bar';
 
 interface PageLayoutProps {
   children: JSX.Element[] | JSX.Element;
@@ -11,7 +11,7 @@ export const PageLayout: React.FC<PageLayoutProps> = ({ children }) => {
     <div className='page-layout'>
       <MobileNavBar />
       <NavBar />
-      <div className='page-layout__content'>{children}</div>
+      <div className='page-layout-content'>{children}</div>
     </div>
   );
 };

@@ -5,7 +5,10 @@ import dotenv from 'dotenv';
 // routing imports
 import { login } from './routes/login';
 import { publicRoute } from './routes/public';
-import { protectedRoute } from './routes/protected';
+import { getUser } from './routes/get-user';
+// import { refreshAuthToken } from './routes/refresh-auth-token';
+
+// utils
 import { verify } from './utils/verify';
 
 dotenv.config();
@@ -33,15 +36,16 @@ async function verifyBearerToken(req: express.Request, res: express.Response, ne
         next();
       }
     } catch (error) {
-      res.json({ authenticated: false, error });
+      res.status(403).json({ error: "Unable to validate security token" });
     }
   }
 }
 
 // apply routes to express app
+// app.use('/api/auth/refresh', refreshAuthToken)
 app.use('/api/login', login);
 app.use('/api/public', publicRoute);
-app.use('/api/protected', verifyBearerToken, protectedRoute);
+app.use('/api/users/:userId', verifyBearerToken, getUser);
 
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);

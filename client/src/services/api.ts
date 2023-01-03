@@ -26,11 +26,12 @@ export const getPublicResource = async (): Promise<ApiResponse> => {
   return callApi(config);
 };
 
-export const getProtectedResource = async (
+export const getUser = async (
+  userId: string | undefined,
   accessToken: string | undefined,
 ): Promise<ApiResponse> => {
   const config: AxiosRequestConfig = {
-    url: `${apiServerUrl}/protected`,
+    url: `${apiServerUrl}/users/${userId}`,
     method: 'GET',
     headers: {
       'content-type': 'application/json',
