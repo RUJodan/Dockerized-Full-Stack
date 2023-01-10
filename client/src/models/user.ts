@@ -1,7 +1,6 @@
 export interface User {
-  id: number;
-  username: string | null;
+  username: string;
   email: string;
-  sub: string;
-  activated: boolean;
+  password: string;
+  passwordConfirm: string;
 }

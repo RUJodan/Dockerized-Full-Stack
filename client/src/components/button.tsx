@@ -11,6 +11,7 @@ interface Props {
   onClick?: () => void;
   icon?: IconDefinition;
   iconPlacement?: 'start' | 'end';
+  type?: 'submit' | 'button';
 }
 
 export const Button: React.FC<Props> = ({
@@ -22,6 +23,7 @@ export const Button: React.FC<Props> = ({
   disabled = false,
   icon,
   iconPlacement,
+  type,
 }: Props) => {
   let navClass = '';
   if (navigation) {
@@ -30,8 +32,8 @@ export const Button: React.FC<Props> = ({
 
   return (
     <button
+      type={type || 'button'}
       disabled={disabled}
-      type='button'
       className={`button button-${variant} button-${size} ${navClass}`}
       onClick={onClick}
     >

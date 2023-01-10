@@ -29,6 +29,7 @@ You will have to inject production environment variables into the `production.ym
 Local development without docker is also available by using the scripts in `package.json` (build, dev, etc)
 
 ## PG & PGAdmin Commands
+
 PGADmin
 `docker run --name pgadmin -p 5050:80 -e PGADMIN_DEFAULT_EMAIL=youremail -e PGADMIN_DEFAULT_PASSWORD=yourpassword -d dpage/pgadmin4`
 

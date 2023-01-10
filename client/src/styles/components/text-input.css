@@ -13,11 +13,16 @@
   background-color: var(--text-input-background);
   color: var(--color-primary);
   border: none;
+  font-size: 1.4rem;
 }
 
 .text-input-wrapper input:focus {
   outline: none;
   box-shadow: inset 0 0 0 3px var(--text-input-focus);
+}
+
+.text-input-wrapper.error input:focus {
+  box-shadow: inset 0 0 0 3px var(--error-red);
 }
 
 .text-input-wrapper input:disabled+label {
@@ -36,6 +41,21 @@
   color: var(--text-input-label);
   font-size: 1.4rem;
   left: 1.25rem;
+  cursor: text;
+}
+
+.text-input-wrapper.error input {
+  box-shadow: inset 0 0 0 1px var(--error-red);
+}
+
+.text-input-wrapper.error label {
+  color: var(--error-red);
+}
+
+.text-input-wrapper div.error-message {
+  padding-left: 0.5rem;
+  padding-top: 0.5rem;
+  color: var(--error-red);
 }
 
 .text-input-wrapper:focus-within label, .text-input-wrapper .has-value {
@@ -44,4 +64,8 @@
   padding-left: 0.7rem;
   padding-right: 0.7rem;
   color: var(--text-input-label);
+}
+
+.text-input-wrapper:focus-within.error label, .text-input-wrapper.error .has-value {
+  color: var(--error-red);
 }

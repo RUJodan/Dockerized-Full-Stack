@@ -142,6 +142,14 @@ pre {
   width: 100%;
 }
 
+input {
+  color-scheme: dark;
+}
+
+.padding-bottom {
+  padding-bottom: 1rem;
+}
+
 @media only screen and (max-width: 640px) {
   .mobile-scroll-lock {
     overflow: hidden;

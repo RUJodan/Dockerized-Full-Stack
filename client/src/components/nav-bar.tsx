@@ -1,10 +1,13 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
-import { useAuth } from 'react-oidc-context';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { Button } from './button';
 
 export const NavBar: React.FC = () => {
-  const auth = useAuth();
+  const navigate = useNavigate();
+
+  // get user from session
+  const user = JSON.parse(localStorage.getItem('user') || '');
+
   return (
     <div className='nav-bar-container'>
       <nav className='nav-bar'>
@@ -12,39 +15,51 @@ export const NavBar: React.FC = () => {
           <NavLink to='/'>Roleplayr</NavLink>
         </div>
         <div className='nav-bar-tabs'>
-          {auth.isAuthenticated && (
-            <div className='nav-bar-tab'>
-              <NavLink
-                to='/profile'
-                end
-                className={({ isActive }) =>
-                  'nav-bar-tab ' + (isActive ? 'nav-bar-tab--active' : '')
-                }
-              >
-                Profile
-              </NavLink>
-            </div>
-          )}
-          <div className='nav-bar-tab'>
-            <NavLink
-              to='/public'
-              end
-              className={({ isActive }) => 'nav-bar-tab ' + (isActive ? 'nav-bar-tab--active' : '')}
-            >
-              Public
-            </NavLink>
-          </div>
-        </div>
-        <div className='nav-bar-buttons'>
-          {!auth.isAuthenticated && (
+          {user && user.access_token && (
             <>
-              <Button size='sm' variant='secondary' onClick={auth.signinRedirect} text='Sign Up' />
-              <Button size='sm' variant='primary' onClick={auth.signinRedirect} text='Log In' />
+              <div className='nav-bar-tab'>
+                <NavLink
+                  to='/profile'
+                  end
+                  className={({ isActive }) =>
+                    'nav-bar-tab ' + (isActive ? 'nav-bar-tab--active' : '')
+                  }
+                >
+                  Profile
+                </NavLink>
+              </div>
+              <div className='nav-bar-tab'>
+                <NavLink
+                  to='/public'
+                  end
+                  className={({ isActive }) =>
+                    'nav-bar-tab ' + (isActive ? 'nav-bar-tab--active' : '')
+                  }
+                >
+                  Public
+                </NavLink>
+              </div>
             </>
           )}
-          {auth.isAuthenticated && (
-            <Button size='sm' variant='tertiary' onClick={auth.signoutRedirect} text='Log Out' />
+        </div>
+        <div className='nav-bar-buttons'>
+          {!user && (
+            <>
+              <Button
+                size='sm'
+                variant='secondary'
+                onClick={() => navigate('/create-account')}
+                text='Sign Up'
+              />
+              <Button
+                size='sm'
+                variant='primary'
+                onClick={() => navigate('/login')}
+                text='Sign In'
+              />
+            </>
           )}
+          {user && user.access_token && <Button size='sm' variant='tertiary' text='Log Out' />}
         </div>
         <div className='nav-bar-hamburger'>
           <input id='menu-toggle' type='checkbox' />
@@ -52,13 +67,13 @@ export const NavBar: React.FC = () => {
             <div className='menu-button'></div>
           </label>
           <ul className='menu'>
-            {!auth.isAuthenticated && (
+            {!user && (
               <>
                 <li>
                   <Button
                     size='sm'
                     variant='primary'
-                    onClick={auth.signinRedirect}
+                    onClick={() => navigate('/create-account')}
                     text='Sign Up'
                     navigation
                   />
@@ -67,22 +82,16 @@ export const NavBar: React.FC = () => {
                   <Button
                     size='sm'
                     variant='primary'
-                    onClick={auth.signinRedirect}
+                    onClick={() => navigate('/login')}
                     text='Log In'
                     navigation
                   />
                 </li>
               </>
             )}
-            {auth.isAuthenticated && (
+            {user && user.access_token && (
               <li>
-                <Button
-                  size='sm'
-                  variant='tertiary'
-                  onClick={auth.signoutRedirect}
-                  text='Log Out'
-                  navigation
-                />
+                <Button size='sm' variant='tertiary' text='Log Out' navigation />
               </li>
             )}
           </ul>

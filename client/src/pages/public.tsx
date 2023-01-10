@@ -8,9 +8,10 @@ export const Public: React.FC = () => {
 
   useEffect(() => {
     let isMounted = true;
-
     const getMessage = async () => {
-      const { data, error } = await getPublicResource();
+      const { data, error } = await getPublicResource(
+        JSON.parse(localStorage.getItem('user') || '').access_token,
+      );
 
       if (!isMounted) {
         return;

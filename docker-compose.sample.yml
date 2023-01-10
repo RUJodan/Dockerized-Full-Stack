@@ -27,20 +27,15 @@ services:
       - DB_PASSWORD=[db password]
       - DB_PORT=[db port most likely 5432]
       # add oauth environment var
-      - GOOGLE_OAUTH_CLIENT_ID=[your client id]
-      - GOOGLE_OAUTH_CLIENT_SECRET=[your client secret]
-      - GOOGLE_OAUTH_REDIRECT_URL=http://localhost:3050/auth/callback
+      - ACCESS_TOKEN_SECRET=SUPER_SECRET_ACCESS_KEY
+      - REFRESH_TOKEN_SECRET=SUPER_SECRET_REFRESH_KEY
 
   client:
     stdin_open: true
     environment:
       - CHOKIDAR_USEPOLLING=true
       - WDS_SOCKET_PORT=0
-      - REACT_APP_GOOGLE_OAUTH_CLIENT_ID=[your client id]
-      - REACT_APP_GOOGLE_OAUTH_CLIENT_SECRET=[your client secret]
-      - REACT_APP_GOOGLE_OAUTH_ENDPOINT=http://localhost:3050
-      - REACT_APP_GOOGLE_OAUTH_REDIRECT=http://localhost:3050/auth/callback
-      - REACT_APP_API_SERVER_URL=http://localhost:3050
+      - REACT_APP_API_SERVER_URL=http://localhost:3001
     build:
       dockerfile: Dockerfile.dev
       context: ./client
