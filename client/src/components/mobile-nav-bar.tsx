@@ -19,12 +19,6 @@ export const MobileNavBar: React.FC = () => {
       label: 'Profile',
       icon: faUser,
     },
-    {
-      id: 2,
-      route: '/public',
-      label: 'Public',
-      icon: faHome,
-    },
   ];
 
   const navComponents = navItems.map((item) => {

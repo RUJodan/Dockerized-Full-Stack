@@ -23,7 +23,7 @@ export async function refresh (req: express.Request, res: express.Response) {
         email: tokenDetails.email,
         id: tokenDetails.id,
       }, process.env.ACCESS_TOKEN_SECRET, {
-        expiresIn: '1m'
+        expiresIn: '1d'
       });
 
       // return accessToken to client

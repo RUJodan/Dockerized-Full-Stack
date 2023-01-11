@@ -20,6 +20,10 @@
   background-color: var(--content-title);
 }
 
+.xl {
+  font-size: 2.4rem;
+}
+
 .card-content {
   padding: 1rem;
 }

@@ -1,11 +1,8 @@
-import axios, { AxiosRequestConfig } from 'axios';
+import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { toast } from 'react-toastify';
-import { callExternalApi } from './external-api.service';
 
 // models
-import { User } from '../models/user';
 import { ApiResponse } from '../models/api-response';
-import { Login } from '../models/login';
 
 const apiServerUrl = process.env.REACT_APP_API_SERVER_URL + '/api';
 
@@ -22,8 +19,15 @@ axios.interceptors.response.use(
     if (error.response.status === 403 && !originalConfig._retry) {
       originalConfig._retry = true;
       try {
-        const newToken = await refreshAccessToken();
-        localStorage.setItem('user', JSON.stringify(newToken.data));
+        const config: AxiosRequestConfig = {
+          url: `${apiServerUrl}/refresh`,
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        };
+        const newToken = await callApi(config);
+        localStorage.setItem('session', JSON.stringify(newToken.data));
 
         // retry original request with new access_token
         // create new axios instance to avoid infinite loop of retries
@@ -41,7 +45,52 @@ axios.interceptors.response.use(
   },
 );
 
-async function callApi(config: AxiosRequestConfig) {
+export const callExternalApi = async (options: {
+  config: AxiosRequestConfig;
+}): Promise<ApiResponse> => {
+  try {
+    const response: AxiosResponse = await axios(options.config);
+    const { data } = response;
+
+    return {
+      data,
+      error: null,
+    };
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      const { response } = error;
+
+      let message = 'HTTP Request Failed';
+      let status = null;
+
+      if (response && response.status) {
+        status = response.status;
+      }
+
+      if (response && response.data && response.data.error) {
+        message = response.data.error;
+      }
+
+      return {
+        data: null,
+        error: {
+          message,
+          status,
+        },
+      };
+    }
+
+    return {
+      data: null,
+      error: {
+        message: 'An unknown HTTP error has occurred.',
+        status: null,
+      },
+    };
+  }
+};
+
+export async function callApi(config: AxiosRequestConfig) {
   const { data, error } = (await callExternalApi({ config })) as ApiResponse;
 
   return {
@@ -49,89 +98,3 @@ async function callApi(config: AxiosRequestConfig) {
     error,
   };
 }
-
-export const refreshAccessToken = async (): Promise<ApiResponse> => {
-  const config: AxiosRequestConfig = {
-    url: `${apiServerUrl}/refresh`,
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  };
-
-  return callApi(config);
-};
-
-export const createUserAccount = async (account: User): Promise<ApiResponse> => {
-  const config: AxiosRequestConfig = {
-    url: `${apiServerUrl}/create-account`,
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    data: {
-      account,
-    },
-  };
-
-  return callApi(config);
-};
-
-export const loginUserAccount = async (login: Login): Promise<ApiResponse> => {
-  const config: AxiosRequestConfig = {
-    url: `${apiServerUrl}/login`,
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    data: {
-      login,
-    },
-  };
-
-  return callApi(config);
-};
-
-export const getPublicResource = async (accessToken: string | null): Promise<ApiResponse> => {
-  const config: AxiosRequestConfig = {
-    url: `${apiServerUrl}/public`,
-    method: 'GET',
-    headers: {
-      'content-type': 'application/json',
-      Authorization: `Bearer ${accessToken}`,
-    },
-  };
-
-  return callApi(config);
-};
-
-export const getUser = async (
-  userId: string | undefined,
-  accessToken: string | undefined,
-): Promise<ApiResponse> => {
-  const config: AxiosRequestConfig = {
-    url: `${apiServerUrl}/users/${userId}`,
-    method: 'GET',
-    headers: {
-      'content-type': 'application/json',
-      Authorization: `Bearer ${accessToken}`,
-    },
-  };
-
-  return callApi(config);
-};
-
-export const verifyGoogleToken = async (accessToken: string): Promise<ApiResponse> => {
-  const config: AxiosRequestConfig = {
-    url: `${apiServerUrl}/login`,
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    data: {
-      token: accessToken,
-    },
-  };
-
-  return callApi(config);
-};

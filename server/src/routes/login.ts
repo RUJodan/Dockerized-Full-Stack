@@ -29,7 +29,7 @@ export async function login (req: express.Request, res: express.Response) {
         email: rows[0].email,
         id: rows[0].id,
     }, process.env.ACCESS_TOKEN_SECRET, {
-        expiresIn: '1m'
+        expiresIn: '1h'
     });
 
     // Creating refresh token not that expiry of refresh
@@ -39,15 +39,14 @@ export async function login (req: express.Request, res: express.Response) {
         email: rows[0].email,
         id: rows[0].id,
     }, process.env.REFRESH_TOKEN_SECRET, {
-      expiresIn: '2m'
+      expiresIn: '1d'
     });
 
     // Assigning refresh token in http-only cookie
-    res.cookie('jwt', refreshToken, {
+    res.cookie('jwt-session', refreshToken, {
       httpOnly: true,
       sameSite: 'none', secure: true,
-      // maxAge: 24 * 60 * 60 * 1000
-      maxAge: 2 * 60 * 1000
+      maxAge: 24 * 60 * 60 * 1000
     });
 
     // return accessToken to client

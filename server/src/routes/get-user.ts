@@ -6,7 +6,7 @@ const router = express.Router();
 export async function getUser (req: express.Request, res: express.Response) {
   try {
     const { rows, rowCount } = await client.query(
-      `SELECT * FROM "users" WHERE username=$1`,
+      `SELECT id, username, email FROM "users" WHERE id=$1`,
       [req.params.userId]
     );
 

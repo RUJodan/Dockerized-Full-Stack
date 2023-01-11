@@ -11,7 +11,7 @@ import { TextInput } from '../components/text-input';
 import { Button } from '../components/button';
 
 // services
-import { loginUserAccount } from '../services/api';
+import { loginUserAccount } from '../services/login-user-account';
 
 // models
 import { Login } from '../models/login';
@@ -43,7 +43,7 @@ export const SignIn: React.FC = () => {
 
     if (data) {
       toast('You have successfully signed in.');
-      localStorage.setItem('user', JSON.stringify(data));
+      localStorage.setItem('session', JSON.stringify(data));
 
       setTimeout(() => {
         navigate('/');

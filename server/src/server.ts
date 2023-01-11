@@ -7,9 +7,9 @@ import jwt from 'jsonwebtoken';
 // routing imports
 import { createAccount } from './routes/create-account';
 import { login } from './routes/login';
-import { publicRoute } from './routes/public';
 import { getUser } from './routes/get-user';
 import { refresh } from './routes/refresh';
+import { logout } from './routes/logout';
 
 dotenv.config();
 
@@ -45,7 +45,7 @@ async function verifyBearerToken(req: express.Request, res: express.Response, ne
 app.use('/api/create-account', createAccount)
 app.use('/api/refresh', refresh);
 app.use('/api/login', login);
-app.use('/api/public', verifyBearerToken, publicRoute);
+app.use('/api/logout', logout);
 app.use('/api/users/:userId', verifyBearerToken, getUser);
 
 app.listen(PORT, () => {

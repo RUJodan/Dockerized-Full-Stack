@@ -1,6 +1,6 @@
 export interface User {
-  username: string;
+  id: number;
   email: string;
-  password: string;
-  passwordConfirm: string;
+  username: string;
+  authenticated?: boolean;
 }

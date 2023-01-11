@@ -4,7 +4,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 
 // services
-import { createUserAccount } from '../services/api';
+import { createUserAccount } from '../services/create-user-account';
 
 // local imports
 import { PageLayout } from '../components/page-layout';
@@ -13,7 +13,7 @@ import { TextInput } from '../components/text-input';
 import { Button } from '../components/button';
 
 // types
-import { User } from '../models/user';
+import { CreateUserAccount } from '../models/create-account';
 
 export const CreateAccount: React.FC = () => {
   const navigate = useNavigate();
@@ -22,7 +22,7 @@ export const CreateAccount: React.FC = () => {
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm<User>({
+  } = useForm<CreateUserAccount>({
     mode: 'onSubmit',
     reValidateMode: 'onChange',
     defaultValues: {
@@ -35,7 +35,7 @@ export const CreateAccount: React.FC = () => {
 
   const pwd = watch('password');
 
-  async function onSubmit(accountData: User) {
+  async function onSubmit(accountData: CreateUserAccount) {
     const { data, error } = await createUserAccount(accountData);
     if (error?.status && error.message) {
       toast(`${error.message}`);

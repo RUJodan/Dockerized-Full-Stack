@@ -1,12 +1,18 @@
 import React from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
+
+// components
 import { Button } from './button';
+
+// hooks
+import useSession from '../hooks/useSession';
+import { logoutUserAccount } from '../services/logout-user-account';
 
 export const NavBar: React.FC = () => {
   const navigate = useNavigate();
 
   // get user from session
-  const user = JSON.parse(localStorage.getItem('user') || '');
+  const { session, deleteSession } = useSession();
 
   return (
     <div className='nav-bar-container'>
@@ -15,7 +21,7 @@ export const NavBar: React.FC = () => {
           <NavLink to='/'>Roleplayr</NavLink>
         </div>
         <div className='nav-bar-tabs'>
-          {user && user.access_token && (
+          {session && session.access_token && (
             <>
               <div className='nav-bar-tab'>
                 <NavLink
@@ -28,22 +34,11 @@ export const NavBar: React.FC = () => {
                   Profile
                 </NavLink>
               </div>
-              <div className='nav-bar-tab'>
-                <NavLink
-                  to='/public'
-                  end
-                  className={({ isActive }) =>
-                    'nav-bar-tab ' + (isActive ? 'nav-bar-tab--active' : '')
-                  }
-                >
-                  Public
-                </NavLink>
-              </div>
             </>
           )}
         </div>
         <div className='nav-bar-buttons'>
-          {!user && (
+          {!session && (
             <>
               <Button
                 size='sm'
@@ -59,7 +54,20 @@ export const NavBar: React.FC = () => {
               />
             </>
           )}
-          {user && user.access_token && <Button size='sm' variant='tertiary' text='Log Out' />}
+          {session && session.access_token && (
+            <Button
+              size='sm'
+              variant='tertiary'
+              text='Log Out'
+              onClick={async () => {
+                const response = await logoutUserAccount();
+                if (response && response.data?.success) {
+                  deleteSession();
+                  navigate('/login');
+                }
+              }}
+            />
+          )}
         </div>
         <div className='nav-bar-hamburger'>
           <input id='menu-toggle' type='checkbox' />
@@ -67,7 +75,7 @@ export const NavBar: React.FC = () => {
             <div className='menu-button'></div>
           </label>
           <ul className='menu'>
-            {!user && (
+            {!session && (
               <>
                 <li>
                   <Button
@@ -89,9 +97,21 @@ export const NavBar: React.FC = () => {
                 </li>
               </>
             )}
-            {user && user.access_token && (
+            {session && session.access_token && (
               <li>
-                <Button size='sm' variant='tertiary' text='Log Out' navigation />
+                <Button
+                  size='sm'
+                  variant='tertiary'
+                  text='Log Out'
+                  navigation
+                  onClick={async () => {
+                    const response = await logoutUserAccount();
+                    if (response && response.data?.success) {
+                      deleteSession();
+                      navigate('/login');
+                    }
+                  }}
+                />
               </li>
             )}
           </ul>
